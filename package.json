@@ -1,0 +1,49 @@
+{
+  "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.41.1",
+    "@react-google-maps/api": "^2.19.3",
+    "@supabase/supabase-js": "^2.91.1",
+    "@twilio/voice-sdk": "^2.18.1",
+    "elevenlabs": "^1.59.0",
+    "groq-sdk": "^1.1.2",
+    "jszip": "^3.10.1",
+    "next": "15.1.11",
+    "papaparse": "^5.5.3",
+    "pg": "^8.18.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^3.0.2",
+    "resend": "^6.9.1",
+    "sharp": "^0.34.5",
+    "twilio": "^5.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/papaparse": "^5.5.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.0.0",
+    "postcss": "^8.5.5",
+    "supabase": "^2.76.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5"
+  },
+  "name": "sohergh",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "compress-images": "node scripts/compress-images.mjs",
+    "dev": "cross-env NODE_ENV=development next dev -H 0.0.0.0 -p 3002",
+    "lint": "next lint",
+    "supabase:link": "supabase link",
+    "supabase:push": "supabase db push",
+    "supabase:migrate": "supabase db push",
+    "db:migrate": "node scripts/run-migration.mjs",
+    "twilio:twiml-app": "node scripts/create-twiml-app.mjs",
+    "create-admin": "node scripts/create-admin-user.mjs"
+  },
+  "version": "0.1.0"
+}

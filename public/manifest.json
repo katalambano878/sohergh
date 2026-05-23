@@ -1,0 +1,41 @@
+{
+  "name": "SoHer GH",
+  "short_name": "SoHer GH",
+  "description": "Wigs, hair, beauty — SoHer GH & SoHer Beauty.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "dir": "ltr",
+  "lang": "en",
+  "categories": ["shopping"],
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Shop",
+      "short_name": "Shop",
+      "description": "Browse products",
+      "url": "/shop?source=pwa-shortcut",
+      "icons": [{ "src": "/icon.png", "sizes": "512x512", "type": "image/png" }]
+    },
+    {
+      "name": "Cart",
+      "short_name": "Cart",
+      "description": "Shopping cart",
+      "url": "/cart?source=pwa-shortcut",
+      "icons": [{ "src": "/icon.png", "sizes": "512x512", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false,
+  "related_applications": []
+}
