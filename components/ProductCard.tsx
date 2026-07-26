@@ -1,4 +1,5 @@
 'use client';
+import { money } from '@/lib/format-money';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -85,7 +86,7 @@ export default function ProductCard({
 
   const MAX_SWATCHES = 5;
 
-  const formatPrice = (val: number) => `GH\u20B5${val.toFixed(2)}`;
+  const formatPrice = (val: number) => `GH\u20B5${money(val)}`;
 
   const pillButtonClass =
     'shrink-0 rounded-full border border-[#E2E8F0] bg-white px-4 py-2.5 text-sm font-medium text-black hover:bg-slate-50 active:bg-slate-100 transition-colors disabled:opacity-45 disabled:pointer-events-none';
