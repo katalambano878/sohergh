@@ -5,6 +5,8 @@ import {
 } from "@/lib/db/supabase-compat";
 import { isPlainPostgres } from "@/lib/db/mode";
 
+import { guardTable } from "@/lib/db/rest-guard";
+
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
@@ -45,7 +47,7 @@ export async function OPTIONS() {
   return new NextResponse(null, { status: 204, headers: corsHeaders() });
 }
 
-export async function GET(
+async function getUnguarded(
   req: NextRequest,
   ctx: { params: Promise<{ table: string }> }
 ) {
@@ -90,7 +92,7 @@ export async function GET(
   return NextResponse.json(result.data ?? [], { status: 200, headers });
 }
 
-export async function POST(
+async function postUnguarded(
   req: NextRequest,
   ctx: { params: Promise<{ table: string }> }
 ) {
@@ -102,6 +104,13 @@ export async function POST(
 
   const body = await req.json().catch(() => null);
   if (body == null) return jsonError("Invalid JSON body");
+  // A shop order placed from the browser starts unpaid: orders.payment_status
+  // has no database default, and rest-guard drops it from non-staff inserts.
+  if (table === "orders") {
+    for (const r of Array.isArray(body) ? body : [body]) {
+      if (r && typeof r === "object" && r.payment_status == null) r.payment_status = "pending";
+    }
+  }
 
   const client = createClient();
   let qb = client.from(table).insert(body);
@@ -119,7 +128,7 @@ export async function POST(
   });
 }
 
-export async function PATCH(
+async function patchUnguarded(
   req: NextRequest,
   ctx: { params: Promise<{ table: string }> }
 ) {
@@ -146,7 +155,7 @@ export async function PATCH(
   return NextResponse.json(result.data, { status: 200, headers: corsHeaders() });
 }
 
-export async function DELETE(
+async function deleteUnguarded(
   req: NextRequest,
   ctx: { params: Promise<{ table: string }> }
 ) {
@@ -168,3 +177,8 @@ export async function DELETE(
 
   return NextResponse.json(result.data ?? null, { status: 200, headers: corsHeaders() });
 }
+
+export const GET = guardTable("GET", getUnguarded);
+export const POST = guardTable("POST", postUnguarded);
+export const PATCH = guardTable("PATCH", patchUnguarded);
+export const DELETE = guardTable("DELETE", deleteUnguarded);

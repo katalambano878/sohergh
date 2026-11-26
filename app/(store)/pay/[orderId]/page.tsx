@@ -28,7 +28,7 @@ export default function PaymentPage() {
         let query = supabase
           .from('orders')
           .select('*')
-          .or(`id.eq.${orderId},order_number.eq.${orderId}`)
+          .eq(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(orderId) ? 'id' : 'order_number', orderId) // exact match: the data API refuses or= order lookups
           .single();
 
         const { data, error: fetchError } = await query;
