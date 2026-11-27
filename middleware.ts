@@ -69,7 +69,9 @@ export async function middleware(request: NextRequest) {
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  if (pathname.startsWith('/admin')) {
+  // The voice-support dashboard lists call transcripts and tickets: staff only,
+  // behind the same session check as /admin.
+  if (pathname.startsWith('/admin') || pathname.startsWith('/support/dashboard')) {
     response.headers.set('X-Robots-Tag', 'noindex, nofollow');
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
 
@@ -151,6 +153,8 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/admin/:path*',
+    '/support/dashboard/:path*',
+    '/support/dashboard',
     '/api/:path*',
     '/rest/:path*',
     '/auth/v1/:path*',
